@@ -1,0 +1,9 @@
+{
+    "index_type": "acmg_inverted_index",
+    "total_rules": 25,
+    "classification_groups": [
+        "pathogenic",
+        "benign",
+        "likely_benign"
+    ]
+}
