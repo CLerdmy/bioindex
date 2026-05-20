@@ -5,7 +5,8 @@ description = "ACMG inverted index"
 requires-python = ">=3.14"
 
 dependencies = [
-    "sqlalchemy>=2.0"
+    "sqlalchemy>=2.0",
+    "elasticsearch>=9.0"
 ]
 
 [tool.setuptools.packages.find]
