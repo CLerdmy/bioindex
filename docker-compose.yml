@@ -5,4 +5,20 @@ services:
       - .:/app
     stdin_open: true
     tty: true
+
+    depends_on:
+      - elasticsearch
+
     command: /bin/bash
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.4.1
+
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+
+    ports:
+      - "9200:9200"
+
+    mem_limit: 2g
