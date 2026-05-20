@@ -11,5 +11,5 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["db", "data", "parsers", "scripts", "tests"]
+include = ["db", "data", "parsers", "scripts", "tests", "benchmarks"]
 exclude = ["venv*"]
