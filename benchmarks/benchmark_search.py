@@ -77,6 +77,54 @@ def benchmark_sql():
     )
 
 
+def benchmark_sql_like():
+    query = text("""
+        SELECT id, rules, classification
+        FROM variants
+        WHERE rules LIKE :pattern
+    """)
+
+    start = time.perf_counter()
+
+    matched = set()
+
+    allowed = {
+        "Pathogenic",
+        "LikelyPathogenic",
+        "Benign",
+        "LikelyBenign",
+    }
+
+    with engine.connect() as conn:
+
+        rows = conn.execute(query, {"pattern": f'%"{TEST_RULE}"%'}).fetchall()
+
+        for variant_id, rules_raw, classification in rows:
+            if classification not in allowed:
+                continue
+
+            if not rules_raw:
+                continue
+
+            try:
+                rules = json.loads(rules_raw)
+            except json.JSONDecodeError:
+                continue
+
+            for rule in rules:
+                if (rule.get("name") == TEST_RULE and rule.get("assessment") == "MET"):
+                    matched.add(variant_id)
+                    break
+
+    elapsed = time.perf_counter() - start
+
+    print(
+        f"SQL LIKE + JSON parsing: "
+        f"{len(matched)} results | "
+        f"{elapsed:.6f} sec"
+    )
+
+
 def benchmark_inverted_index():
     with open(INDEX_PATH, "rb") as file:
         index = pickle.load(file)
@@ -166,6 +214,8 @@ if __name__ == "__main__":
     print(f"\nBenchmark for rule: {TEST_RULE}\n")
 
     benchmark_sql()
+
+    benchmark_sql_like()
 
     benchmark_inverted_index()
 
