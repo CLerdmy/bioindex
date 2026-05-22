@@ -8,7 +8,7 @@ from elasticsearch import Elasticsearch
 from sqlalchemy import text
 
 from db.session import engine
-from scripts.build_compressed_index_acmg import delta_decode
+from scripts.build_compressed_index_acmg import delta_decode, gamma_decode_postings
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -169,7 +169,7 @@ def search_compressed(rule_name):
 
     for postings in result.values():
 
-        decoded = delta_decode(postings)
+        decoded = gamma_decode_postings(postings)
 
         matched.update(decoded)
 
