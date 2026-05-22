@@ -99,7 +99,7 @@ python scripts/check_index_files.py
 python benchmarks/benchmark_full.py
 ```
 
-###### Тестирование AND-запросов
+##### Тестирование AND-запросов
 
 ```bash
 python benchmarks/benchmark_and_queries.py
