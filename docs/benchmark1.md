@@ -1,3 +1,5 @@
+*COMPRESSED - Delta*
+
 ```text
 Benchmark for rule: PM2
 

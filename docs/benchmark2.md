@@ -1,3 +1,5 @@
+*COMPRESSED - Delta*
+
 ```text
 === SQL FULL SCAN ===
 
