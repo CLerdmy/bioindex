@@ -13,3 +13,17 @@ dependencies = [
 where = ["."]
 include = ["db", "data", "parsers", "scripts", "tests", "benchmarks"]
 exclude = ["venv*"]
+
+[tool.coverage.run]
+omit = [
+    "benchmarks/*",
+    "tests/*",
+    "*/__main__.py"
+]
+exclude_lines = [
+    "if __name__ == .__main__.:",
+    "pragma: no cover"
+]
+
+[tool.pytest.ini_options]
+addopts = "--cov=scripts --cov=parsers --cov-report=term-missing"
