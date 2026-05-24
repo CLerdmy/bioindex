@@ -22,7 +22,7 @@
 
 ## Используемые технологии
 
-Python, Elasticsearch, SQLalchemy, JSON
+Python, C, Docker, Elasticsearch, SQLalchemy, JSON, pickle
 
 ## Алгоритм построения индекса
 
@@ -83,6 +83,12 @@ python scripts/build_compressed_index_acmg.py
 
 ```bash
 python scripts/load_elasticsearch.py
+```
+
+#### Сборка CGAMMA
+
+```bash
+cd /app/cgamma_src && pip install -e . --no-build-isolation
 ```
 
 #### Проверка статистики индексов
