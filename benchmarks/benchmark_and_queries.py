@@ -27,6 +27,13 @@ COMPRESSED_INDEX_PATH = (
     / "compressed_index.pkl"
 )
 
+CGAMMA_INDEX_PATH = (
+    BASE_DIR
+    / "data"
+    / "indexes"
+    / "cgamma_index.cgamma"
+)
+
 RUNS = 5
 
 ALLOWED_CLASSIFICATIONS = {
@@ -214,6 +221,24 @@ def search_compressed(rule_a, rule_b):
     return set_a & set_b
 
 
+import cgamma
+from cgamma_src.gamma_c import read_cgamma_file
+
+CGAMMA_INDEX = read_cgamma_file(CGAMMA_INDEX_PATH)
+
+def search_cgamma(rule_a, rule_b):
+    set_a = set()
+    set_b = set()
+
+    for encoded in CGAMMA_INDEX.get(rule_a, {}).values():
+        set_a.update(cgamma.decode_postings(encoded))
+
+    for encoded in CGAMMA_INDEX.get(rule_b, {}).values():
+        set_b.update(cgamma.decode_postings(encoded))
+
+    return set_a & set_b
+
+
 ES = Elasticsearch("http://elasticsearch:9200")
 
 
@@ -342,27 +367,33 @@ def benchmark_method(name, search_func, ground_truth):
 if __name__ == "__main__":
     ground_truth = build_ground_truth()
 
-    benchmark_method(
-        "SQL FULL SCAN",
-        search_sql_full,
-        ground_truth
-    )
+    # benchmark_method(
+    #     "SQL FULL SCAN",
+    #     search_sql_full,
+    #     ground_truth
+    # )
 
-    benchmark_method(
-        "SQL LIKE",
-        search_sql_like,
-        ground_truth
-    )
+    # benchmark_method(
+    #     "SQL LIKE",
+    #     search_sql_like,
+    #     ground_truth
+    # )
 
-    benchmark_method(
-        "INVERTED INDEX",
-        search_inverted,
-        ground_truth
-    )
+    # benchmark_method(
+    #     "INVERTED INDEX",
+    #     search_inverted,
+    #     ground_truth
+    # )
 
     benchmark_method(
         "COMPRESSED INDEX",
         search_compressed,
+        ground_truth
+    )
+
+    benchmark_method(
+        "CGAMMA INDEX",
+        search_cgamma,
         ground_truth
     )
 

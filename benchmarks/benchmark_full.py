@@ -27,6 +27,13 @@ COMPRESSED_INDEX_PATH = (
     / "compressed_index.pkl"
 )
 
+CGAMMA_INDEX_PATH = (
+    BASE_DIR
+    / "data"
+    / "indexes"
+    / "cgamma_index.cgamma"
+)
+
 RULES_TO_TEST = [
     "PM2",
     "PVS1",
@@ -176,6 +183,18 @@ def search_compressed(rule_name):
     return matched
 
 
+import cgamma
+from cgamma_src.gamma_c import read_cgamma_file
+
+
+def search_cgamma(rule_name):
+    index = read_cgamma_file(CGAMMA_INDEX_PATH)
+    matched = set()
+    for encoded in index.get(rule_name, {}).values():
+        matched.update(cgamma.decode_postings(encoded))
+    return matched
+
+
 ES = Elasticsearch("http://elasticsearch:9200")
 
 
@@ -302,6 +321,12 @@ if __name__ == "__main__":
     benchmark_method(
         "COMPRESSED INDEX",
         search_compressed,
+        ground_truth
+    )
+
+    benchmark_method(
+        "CGAMMA INDEX",
+        search_cgamma,
         ground_truth
     )
 
