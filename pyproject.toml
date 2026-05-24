@@ -6,12 +6,13 @@ requires-python = ">=3.14"
 
 dependencies = [
     "sqlalchemy>=2.0",
-    "elasticsearch>=9.0"
+    "elasticsearch>=9.0",
+    "setuptools>=80.0"
 ]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["db", "data", "parsers", "scripts", "tests", "benchmarks"]
+include = ["db", "data", "parsers", "scripts", "tests", "benchmarks", "cgamma_src"]
 exclude = ["venv*"]
 
 [tool.coverage.run]
@@ -27,3 +28,6 @@ exclude_lines = [
 
 [tool.pytest.ini_options]
 addopts = "--cov=scripts --cov=parsers --cov-report=term-missing"
+
+[tool.setuptools.data-files]
+"." = ["cgamma.pth"]
