@@ -5,3 +5,10 @@ __pycache__*
 # db
 data/*.db
 data/indexes/*.pkl
+data/indexes/*.cgamma
+
+*.so
+*.pyd
+build/
+cgamma/build
+*.pth
