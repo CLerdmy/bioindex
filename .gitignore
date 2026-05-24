@@ -12,3 +12,6 @@ data/indexes/*.cgamma
 build/
 cgamma/build
 *.pth
+
+.coverage
+.coverage.*
