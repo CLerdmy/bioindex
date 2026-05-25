@@ -1,7 +1,7 @@
 import struct
 from pathlib import Path
 
-import cgamma
+from cgamma_src import cgamma
 
 _MAGIC = b"GAMM"
 

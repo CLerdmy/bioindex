@@ -1,7 +1,7 @@
 import pickle
 from pathlib import Path
 
-import cgamma
+from cgamma_src import cgamma
 from cgamma_src.gamma_c import write_cgamma_file
 
 

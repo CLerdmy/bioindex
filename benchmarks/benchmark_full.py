@@ -183,7 +183,7 @@ def search_compressed(rule_name):
     return matched
 
 
-import cgamma
+from cgamma_src import cgamma
 from cgamma_src.gamma_c import read_cgamma_file
 
 

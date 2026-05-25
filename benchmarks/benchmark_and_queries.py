@@ -221,7 +221,7 @@ def search_compressed(rule_a, rule_b):
     return set_a & set_b
 
 
-import cgamma
+from cgamma_src import cgamma
 from cgamma_src.gamma_c import read_cgamma_file
 
 CGAMMA_INDEX = read_cgamma_file(CGAMMA_INDEX_PATH)

@@ -28,6 +28,3 @@ exclude_lines = [
 
 [tool.pytest.ini_options]
 addopts = "--cov=scripts --cov=parsers --cov-report=term-missing"
-
-[tool.setuptools.data-files]
-"." = ["cgamma.pth"]

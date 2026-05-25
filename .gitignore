@@ -11,7 +11,6 @@ data/indexes/*.cgamma
 *.pyd
 build/
 cgamma/build
-*.pth
 
 .coverage
 .coverage.*
