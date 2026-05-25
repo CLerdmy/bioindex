@@ -23,8 +23,23 @@ INDEX_PATH.parent.mkdir(
     exist_ok=True,
 )
 
+# Structure:
+# {
+#   rule_name: str -> {
+#     classification: str -> [variant_id: int, ...]  (sorted)
+#   }
+# }
 
-def build_inverted_index_acmg():
+def build_inverted_index_acmg() -> None:
+    """
+    Build inverted index from database.
+    
+    Reads all variants from DB, extracts MET rules, normalizes classifications,
+    and stores index as pickle.
+    
+    Output: inverted_index.pkl
+        {rule_name: {classification: [variant_id, ...]}}
+    """
 
     db = SessionLocal()
 

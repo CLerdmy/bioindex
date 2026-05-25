@@ -21,8 +21,31 @@ CGAMMA_INDEX_PATH = (
     / "cgamma_index.cgamma"
 )
 
+# Structure:
+# [4 bytes]  magic "GAMM"
+# [4 bytes]  num_rules
+# for every rule:
+#   [2 bytes]  rule_name_len
+#   [N bytes]  rule_name (UTF-8)
+#   [1 byte]   num_classifications
+#   for every cls:
+#     [1 byte]   class_name_len
+#     [N bytes]  class_name (UTF-8)
+#     [4 bytes]  encoded_bytes_len
+#     [N bytes]  gamma compressed posting IDs (count + bytes)
 
 def build_gamma_compressed_index_c(index_path=INDEX_PATH, output_path=CGAMMA_INDEX_PATH) -> None:
+    """
+    Build gamma-compressed index using C extension.
+    
+    Reads inverted index and encodes posting lists via cgamma C module.
+    Stores in binary .cgamma format with magic header.
+    
+    Input: inverted_index.pkl
+    Output: cgamma_index.cgamma
+        Binary format: magic "GAMM" + {rule_name: {classification: bytes}}
+    """
+
     with open(index_path, "rb") as file:
         inverted_index: dict = pickle.load(file)
 

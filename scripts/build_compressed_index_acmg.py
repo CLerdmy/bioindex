@@ -18,8 +18,24 @@ COMPRESSED_INDEX_PATH = (
     / "compressed_index.pkl"
 )
 
+# Structure:
+# {
+#   rule_name: str -> {
+#     classification: str -> [delta: int, ...]  (delta-encoded)
+#   }
+# }
 
-def build_delta_compressed_index():
+def build_delta_compressed_index() -> None:
+    """
+    Build delta-compressed index from inverted index.
+    
+    Converts posting lists to delta-encoded format (differences between consecutive IDs).
+    
+    Input: inverted_index.pkl
+    Output: delta_compressed_index.pkl
+        {rule_name: {classification: [delta, ...]}}
+    """
+    
     with open(INDEX_PATH, "rb") as file:
         inverted_index = pickle.load(file)
 
@@ -64,8 +80,24 @@ def delta_decode(encoded_postings: list[int]) -> list[int]:
 
     return decoded
 
+# Structure:
+# {
+#   rule_name: str -> {
+#     classification: str -> bytes
+#   }
+# }
 
-def build_gamma_compressed_index():
+def build_gamma_compressed_index() -> None:
+    """
+    Build gamma-compressed index from inverted index.
+    
+    Applies Elias gamma encoding, stores as bytes.
+    
+    Input: inverted_index.pkl
+    Output: gamma_compressed_index.pkl
+        {rule_name: {classification: bytes}}
+    """
+    
     with open(INDEX_PATH, "rb") as file:
         inverted_index = pickle.load(file)
 
